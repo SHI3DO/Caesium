@@ -12,9 +12,9 @@ export default {
     const row = new MessageActionRow()
     .addComponents(
         new MessageButton()
-        .setCustomId('Invite_Me')
         .setLabel('Invite Me!')
-        .setStyle('PRIMARY')
+        .setURL('https://discord.com/api/oauth2/authorize?client_id=921244242934923334&permissions=8&scope=bot%20applications.commands')
+        .setStyle('LINK')
     )
       if (message) {
           await message.reply({
