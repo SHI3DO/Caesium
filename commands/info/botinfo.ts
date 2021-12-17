@@ -1,25 +1,6 @@
-import { MessageEmbed } from 'discord.js';
+import { MessageActionRow, MessageButton } from 'discord.js';
 import { ICommand } from 'wokcommands';
 
-function pingembed(restlatency: any, apilatency: any) {
-   const embed = new MessageEmbed()
-      .setFooter('Developed by shi3do#2835')
-      .setColor('#FA747D')
-      .addFields([
-         {
-            name: 'REST Latency',
-            value: `${restlatency}ms`,
-            inline: true,
-         },
-         {
-            name: 'API Latency',
-            value: `${apilatency}ms`,
-            inline: true,
-         },
-      ]);
-
-   return embed;
-}
 
 export default {
    category: 'Info',
@@ -27,21 +8,25 @@ export default {
 
    slash: 'both',
 
-   callback: ({ message, interaction, client }) => {
-      var embed;
+   callback: async ({ message, interaction }) => {
+    const row = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+        .setCustomId('Invite_Me')
+        .setLabel('Invite Me!')
+        .setStyle('PRIMARY')
+    )
       if (message) {
-         embed = pingembed(
-            message.createdTimestamp - Date.now(),
-            Math.round(client.ws.ping),
-         );
+          await message.reply({
+              content: 'aaa',
+              components: [row]
+          })
       }
       if (interaction) {
-         embed = pingembed(
-            interaction.createdTimestamp - Date.now(),
-            Math.round(client.ws.ping),
-         );
+          await interaction.reply({
+              content: 'aaa',
+              components: [row]
+          })
       }
-
-      return embed;
    },
 } as ICommand;
