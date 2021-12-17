@@ -5,9 +5,9 @@ export default {
    category: 'Info',
    description: 'Caesium Bot Info',
 
-   slash: 'both',
+   slash: true,
 
-   callback: async ({ message, interaction }) => {
+   callback: async ({ interaction }) => {
       const row = new MessageActionRow()
          .addComponents(
             new MessageButton()
@@ -17,7 +17,7 @@ export default {
                )
                .setStyle('LINK'),
          )
-         
+
          .addComponents(
             new MessageButton()
                .setLabel('Docs')
@@ -36,18 +36,9 @@ export default {
             },
          ]);
 
-      if (message) {
-         await message.reply({
-            embeds: [embed],
-            components: [row],
-         });
-      }
-
-      if (interaction) {
-         await interaction.reply({
-            embeds: [embed],
-            components: [row],
-         });
-      }
+      await interaction.reply({
+         embeds: [embed],
+         components: [row],
+      });
    },
 } as ICommand;

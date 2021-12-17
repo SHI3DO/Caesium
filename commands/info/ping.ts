@@ -25,16 +25,10 @@ export default {
    category: 'Info',
    description: 'Latency',
 
-   slash: 'both',
+   slash: true,
 
-   callback: ({ message, interaction, client }) => {
+   callback: ({ interaction, client }) => {
       var embed;
-      if (message) {
-         embed = pingembed(
-            Math.abs(message.createdTimestamp - Date.now()),
-            Math.round(client.ws.ping),
-         );
-      }
       if (interaction) {
          embed = pingembed(
             Math.abs(interaction.createdTimestamp - Date.now()),

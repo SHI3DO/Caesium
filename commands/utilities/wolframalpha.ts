@@ -1,48 +1,32 @@
-import { MessageEmbed } from 'discord.js';
 import { ICommand } from 'wokcommands';
-
-function pingembed(restlatency: any, apilatency: any) {
-   const embed = new MessageEmbed()
-      .setFooter('Developed by shi3do#2835')
-      .setColor('#FA747D')
-      .addFields([
-         {
-            name: 'REST Latency',
-            value: `${restlatency}ms`,
-            inline: true,
-         },
-         {
-            name: 'API Latency',
-            value: `${apilatency}ms`,
-            inline: true,
-         },
-      ]);
-
-   return embed;
-}
+import { WolframClient } from 'node-wolfram-alpha';
+import 'dotenv/config';
+import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 
 export default {
    category: 'Utilities',
    description:
       'Compute expert-level answers using Wolfram’s breakthroughalgorithms, knowledgebase and AI technology',
 
-   slash: 'both',
+   options: [
+      {
+         name: 'query',
+         description: 'Enter what you want to calculate or know about',
+         required: true,
+         type: ApplicationCommandOptionTypes.STRING,
+      },
+   ],
+   slash: true,
 
-   callback: ({ message, interaction, client }) => {
-      var embed;
-      if (message) {
-         embed = pingembed(
-            message.createdTimestamp - Date.now(),
-            Math.round(client.ws.ping),
-         );
-      }
-      if (interaction) {
-         embed = pingembed(
-            interaction.createdTimestamp - Date.now(),
-            Math.round(client.ws.ping),
-         );
-      }
-
-      return embed;
+   callback: async ({ interaction }) => {
+      const wolframclient = new WolframClient(process.env.WOLFRAMALPHA_KEY!);
+      const result = await wolframclient.query(
+         String(interaction.options.getString('query')),
+         { podindex: 1 },
+      );
+      console.log(interaction.options.getString('query'));
+      interaction.reply({
+         content: JSON.stringify(result.data),
+      });
    },
 } as ICommand;

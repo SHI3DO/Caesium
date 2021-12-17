@@ -23,8 +23,7 @@ function pingembed(restlatency: any, apilatency: any) {
 
 export default {
    category: 'Utilities',
-   description:
-      'User Info',
+   description: 'User Info',
 
    slash: 'both',
 
