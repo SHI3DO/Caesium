@@ -4,7 +4,7 @@ import { ICommand } from 'wokcommands';
 function pingembed(restlatency: any, apilatency: any) {
    const embed = new MessageEmbed()
       .setFooter('Developed by shi3do#2835')
-      .setColor('LUMINOUS_VIVID_PINK')
+      .setColor('#FA747D')
       .addFields([
          {
             name: 'REST Latency',
@@ -26,7 +26,6 @@ export default {
    description: 'Latency',
 
    slash: 'both',
-   testOnly: true,
 
    callback: ({ message, interaction, client }) => {
       var embed;
