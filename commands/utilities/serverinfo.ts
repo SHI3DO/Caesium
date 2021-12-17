@@ -22,8 +22,9 @@ function pingembed(restlatency: any, apilatency: any) {
 }
 
 export default {
-   category: 'Info',
-   description: 'Latency',
+   category: 'Utilities',
+   description:
+      'Server Info',
 
    slash: 'both',
 
@@ -31,13 +32,13 @@ export default {
       var embed;
       if (message) {
          embed = pingembed(
-            Math.abs(message.createdTimestamp - Date.now()),
+            message.createdTimestamp - Date.now(),
             Math.round(client.ws.ping),
          );
       }
       if (interaction) {
          embed = pingembed(
-            Math.abs(interaction.createdTimestamp - Date.now()),
+            interaction.createdTimestamp - Date.now(),
             Math.round(client.ws.ping),
          );
       }
