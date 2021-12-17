@@ -4,10 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const client = new DiscordJS.Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES
-    ]
+    intents: new Intents(32767)
 })
 
 client.on('ready', () => {
