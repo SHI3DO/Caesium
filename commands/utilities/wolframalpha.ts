@@ -23,7 +23,8 @@ function pingembed(restlatency: any, apilatency: any) {
 
 export default {
    category: 'Utilities',
-   description: 'Compute expert-level answers using Wolfram’s breakthroughalgorithms, knowledgebase and AI technology',
+   description:
+      'Compute expert-level answers using Wolfram’s breakthroughalgorithms, knowledgebase and AI technology',
 
    slash: 'both',
 
