@@ -22,7 +22,7 @@ function pingembed(restlatency: any, apilatency: any) {
 }
 
 export default {
-   category: 'Bot/info',
+   category: 'Info',
    description: 'Latency',
 
    slash: 'both',
