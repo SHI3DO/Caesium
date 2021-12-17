@@ -1,28 +1,31 @@
 {
-  "name": "caesium",
-  "version": "1.0.0",
-  "description": "Caesium",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SHI3DO/Caesium.git"
-  },
-  "keywords": [],
-  "author": "SHI3DO",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SHI3DO/Caesium/issues"
-  },
-  "homepage": "https://github.com/SHI3DO/Caesium#readme",
-  "dependencies": {
-    "discord.js": "^13.3.1",
-    "dotenv": "^10.0.0",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.4",
-    "wokcommands": "^1.5.3"
-  }
+   "name": "caesium",
+   "version": "1.0.0",
+   "description": "Caesium",
+   "main": "index.js",
+   "scripts": {
+      "dev": "nodemon index.ts",
+      "format": "npx prettier --write ."
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/SHI3DO/Caesium.git"
+   },
+   "keywords": [],
+   "author": "SHI3DO",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/SHI3DO/Caesium/issues"
+   },
+   "homepage": "https://github.com/SHI3DO/Caesium#readme",
+   "dependencies": {
+      "discord.js": "^13.3.1",
+      "dotenv": "^10.0.0",
+      "ts-node": "^10.4.0",
+      "typescript": "^4.5.4",
+      "wokcommands": "^1.5.3"
+   },
+   "devDependencies": {
+      "prettier": "^2.5.1"
+   }
 }

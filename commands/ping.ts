@@ -1,18 +1,48 @@
-import { ICommand } from "wokcommands";
+import { MessageEmbed } from 'discord.js';
+import { ICommand } from 'wokcommands';
+
+function pingembed(restlatency: any, apilatency: any) {
+   const embed = new MessageEmbed()
+      .setFooter('Developed by shi3do#2835')
+      .setColor('LUMINOUS_VIVID_PINK')
+      .addFields([
+         {
+            name: 'REST Latency',
+            value: `${restlatency}ms`,
+            inline: true,
+         },
+         {
+            name: 'API Latency',
+            value: `${apilatency}ms`,
+            inline: true,
+         },
+      ]);
+
+   return embed;
+}
 
 export default {
-    category: 'Testing',
-    description: 'ping! pong!',
+   category: 'Bot/info',
+   description: 'Latency',
 
-    slash: 'both',
-    testOnly: true,
+   slash: 'both',
+   testOnly: true,
 
-    callback: ({message, interaction, client}) => {
-        if (message) {
-            message.reply(`Latency is ${message.createdTimestamp - Date.now()}ms. API Latency is ${Math.round(client.ws.ping)}ms`)
-        }
-        if (interaction) {
-            interaction.reply(`Latency is ${interaction.createdTimestamp - Date.now()}ms. API Latency is ${Math.round(client.ws.ping)}ms`)
-        }
-    }, 
-} as ICommand
+   callback: ({ message, interaction, client }) => {
+      var embed;
+      if (message) {
+         embed = pingembed(
+            message.createdTimestamp - Date.now(),
+            Math.round(client.ws.ping),
+         );
+      }
+      if (interaction) {
+         embed = pingembed(
+            interaction.createdTimestamp - Date.now(),
+            Math.round(client.ws.ping),
+         );
+      }
+
+      return embed;
+   },
+} as ICommand;
