@@ -28,14 +28,13 @@ export default {
    slash: true,
 
    callback: ({ interaction, client }) => {
-      var embed;
-      if (interaction) {
-         embed = pingembed(
-            Math.abs(interaction.createdTimestamp - Date.now()),
-            Math.round(client.ws.ping),
-         );
-      }
+      const embed = pingembed(
+         Math.abs(interaction.createdTimestamp - Date.now()),
+         Math.round(client.ws.ping),
+      );
 
-      return embed;
+      interaction.reply({
+         embeds: [embed],
+      });
    },
 } as ICommand;

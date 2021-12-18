@@ -40,29 +40,23 @@ export default {
       var query;
       try {
          query = interaction.options.getString('query');
-
          const url = `https://caesiumpy.vercel.app/wolframalpha/${
             process.env.WOLFRAMALPHA_KEY
          }?query=${encodeURIComponent(query || '0')}`;
-
-         interaction.deferReply()
-
+         interaction.deferReply();
          const res = await axios.get(url);
-
          embed = resembed(String(query), res.data);
-
          interaction.editReply({
-             embeds: [embed]
-         })
-
+            embeds: [embed],
+         });
       } catch (err) {
-        query = interaction.options.getString('query');
+         query = interaction.options.getString('query');
          console.log(err);
-         interaction.deferReply()
+         interaction.deferReply();
          embed = resembed(String(query), 'Error Occured');
          interaction.editReply({
-            embeds: [embed]
-        })
+            embeds: [embed],
+         });
       }
    },
 } as ICommand;

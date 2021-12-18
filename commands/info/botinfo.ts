@@ -36,7 +36,7 @@ export default {
             },
          ]);
 
-      await interaction.reply({
+      interaction.reply({
          embeds: [embed],
          components: [row],
       });
