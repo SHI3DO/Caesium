@@ -1,2 +1,2 @@
-Flask==2.0.2
+flask==2.0.2
 wolframalpha==5.0.0
