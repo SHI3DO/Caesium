@@ -22,3 +22,7 @@ def wolframalpha(query, key):
         return answer
     except Exception as e:
         return e
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
