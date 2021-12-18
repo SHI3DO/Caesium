@@ -20,8 +20,11 @@ export default {
      testOnly: true,
 
    callback: async ({ interaction }) => {
-       const url = `https://caesiumpy.vercel.app/wolframalpha/${interaction.options.getString('query')}/${process.env.WOLFRAMALPHA_KEY}`
+       const query = interaction.options.getString('query')
+       console.log(query)
+       const url = `https://caesiumpy.vercel.app/wolframalpha/${process.env.WOLFRAMALPHA_KEY}/${query}`
+       console.log(url)
        const res = await axios.get(url)
-      interaction.reply(`${interaction.options.getString('query')}: ${res.data}`);
+      interaction.reply(`${query}: ${res.data}`);
    },
 } as ICommand;

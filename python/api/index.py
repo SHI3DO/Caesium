@@ -12,8 +12,7 @@ def home():
 
 @app.route('/wolframalpha/<key>/<query>')
 def wolframalpha(query, key):
-    print("s")
-    print(query, key)
+    query = '%s' % query
     app_id = key
     client = wf.Client(app_id)
     try:
