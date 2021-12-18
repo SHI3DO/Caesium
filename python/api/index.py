@@ -10,7 +10,7 @@ def home():
     return 'Caesium'
 
 
-@app.route('/wolframalpha/<query>/<key>')
+@app.route('/wolframalpha/<key>/<query>')
 def wolframalpha(query, key):
     print("s")
     print(query, key)
