@@ -17,12 +17,11 @@ export default {
         },
      ],
      slash: true,
-     testOnly: true,
 
    callback: async ({ interaction }) => {
        const query = interaction.options.getString('query')
        console.log(query)
-       const url = `https://caesiumpy.vercel.app/wolframalpha/${process.env.WOLFRAMALPHA_KEY}?query={query}`
+       const url = `https://caesiumpy.vercel.app/wolframalpha/${process.env.WOLFRAMALPHA_KEY}?query=${encodeURIComponent(query!)}`
        console.log(url)
        const res = await axios.get(url)
       interaction.reply(`${query}: ${res.data}`);
