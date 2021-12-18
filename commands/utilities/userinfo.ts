@@ -1,47 +1,43 @@
-import { MessageEmbed } from 'discord.js';
+import { Application, MessageEmbed } from 'discord.js';
+import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { ICommand } from 'wokcommands';
 
-function pingembed(restlatency: any, apilatency: any) {
-   const embed = new MessageEmbed()
-      .setFooter('Developed by shi3do#2835')
-      .setColor('#FA747D')
-      .addFields([
-         {
-            name: 'REST Latency',
-            value: `${restlatency}ms`,
-            inline: true,
-         },
-         {
-            name: 'API Latency',
-            value: `${apilatency}ms`,
-            inline: true,
-         },
-      ]);
-
-   return embed;
-}
 
 export default {
    category: 'Utilities',
    description: 'User Info',
 
-   slash: 'both',
+   slash: true,
 
-   callback: ({ message, interaction, client }) => {
-      var embed;
-      if (message) {
-         embed = pingembed(
-            message.createdTimestamp - Date.now(),
-            Math.round(client.ws.ping),
-         );
+   options: [
+      {
+         name: 'user',
+         description: 'user',
+         required: true,
+         type: ApplicationCommandOptionTypes.USER
       }
-      if (interaction) {
-         embed = pingembed(
-            interaction.createdTimestamp - Date.now(),
-            Math.round(client.ws.ping),
-         );
-      }
+   ],
 
-      return embed;
+   callback: ({ interaction }) => {
+      const embed = new MessageEmbed()
+         .setTitle(`${interaction.options.getUser('user')?.username}#${interaction.options.getUser('user')?.discriminator}`)
+         .setColor('#FA747D')
+         .setThumbnail(`${interaction.options.getUser('user')?.displayAvatarURL({dynamic: true})}`)
+         .addFields([
+            {
+               name: 'User ID',
+               value: `${interaction.options.getUser('user')?.id}`,
+               inline: true,
+            },
+            {
+               name: 'Created at',
+               value: `${interaction.options.getUser('user')?.createdAt}`,
+               inline: true
+            }
+         ]);
+
+      interaction.reply({
+         embeds: [embed]
+      })
    },
 } as ICommand;
