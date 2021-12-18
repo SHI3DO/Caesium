@@ -21,7 +21,7 @@ def wolframalpha(key):
         res = client.query(query)
         answer = next(res.results).text
         return answer
-    except Exception as e:
+    except:
         return "Error occured"
 
 
