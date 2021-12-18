@@ -2,33 +2,55 @@ import { ICommand } from 'wokcommands';
 import 'dotenv/config';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import axios from 'axios';
+import { MessageEmbed } from 'discord.js';
+
+function resembed(ques: any, answer: any) {
+    const embed = new MessageEmbed()
+       .setFooter('Developed by shi3do#2835')
+       .setColor('#FA747D')
+       .setTitle(ques)
+       .addFields([
+          {
+             name: 'Answer',
+             value: `${answer}`,
+             inline: true,
+          },
+       ]);
+ 
+    return embed;
+ }
 
 export default {
-    category: 'Utilities',
-    description:
-       'Compute expert-level answers using Wolfram’s breakthroughalgorithms, knowledgebase and AI technology',
+   category: 'Utilities',
+   description:
+      'Compute expert-level answers using Wolfram’s breakthroughalgorithms, knowledgebase and AI technology',
 
-       options: [
-        {
-           name: 'query',
-           description: 'Enter what you want to calculate or know about',
-           required: true,
-           type: ApplicationCommandOptionTypes.STRING,
-        },
-     ],
-     slash: true,
+   options: [
+      {
+         name: 'query',
+         description: 'Enter what you want to calculate or know about',
+         required: true,
+         type: ApplicationCommandOptionTypes.STRING,
+      },
+   ],
+   slash: true,
 
    callback: async ({ interaction }) => {
-       try {
-        const query = interaction.options.getString('query')
-        console.log(query)
-        const url = `https://caesiumpy.vercel.app/wolframalpha/${process.env.WOLFRAMALPHA_KEY}?query=${encodeURIComponent(query || "0")}`
-        console.log(url)
-        const res = await axios.get(url)
-        console.log(res.data)
-       interaction.reply(`${query}: ${String(res.data)}`);
-       } catch (err) {
-           console.log(err)
-       }
+      try {
+         const query = interaction.options.getString('query');
+         console.log(query);
+         const url = `https://caesiumpy.vercel.app/wolframalpha/${
+            process.env.WOLFRAMALPHA_KEY
+         }?query=${encodeURIComponent(query || '0')}`;
+         console.log(url);
+         const res = await axios.get(url);
+         console.log(res.data);
+
+         const embed = resembed(query, res.data)
+         return embed
+         
+      } catch (err) {
+         console.log(err);
+      }
    },
 } as ICommand;
