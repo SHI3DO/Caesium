@@ -1,6 +1,7 @@
 from flask import Flask
 import wolframalpha as wf
 
+
 app = Flask(__name__)
 
 
