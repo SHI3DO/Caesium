@@ -22,7 +22,6 @@
       "discord.js": "^13.3.1",
       "dotenv": "^10.0.0",
       "mongoose": "^6.1.2",
-      "node-wolfram-alpha": "^1.2.5",
       "ts-node": "^10.4.0",
       "typescript": "^4.5.4",
       "wokcommands": "^1.5.3"
