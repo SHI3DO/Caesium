@@ -22,7 +22,7 @@ def wolframalpha(key):
         answer = next(res.results).text
         return answer
     except Exception as e:
-        return e
+        return "Error occured"
 
 
 if __name__ == '__main__':

@@ -4,21 +4,21 @@ import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
 
-function resembed(ques: any, answer: any) {
-    const embed = new MessageEmbed()
-       .setFooter('Developed by shi3do#2835')
-       .setColor('#FA747D')
-       .setTitle(ques)
-       .addFields([
-          {
-             name: 'Answer',
-             value: `${answer}`,
-             inline: true,
-          },
-       ]);
- 
-    return embed;
- }
+function resembed(ques: string, answer: string) {
+   const embed = new MessageEmbed()
+      .setFooter('Developed by shi3do#2835')
+      .setColor('#FA747D')
+      .setTitle(ques)
+      .addFields([
+         {
+            name: 'Answer',
+            value: `${answer}`,
+            inline: true,
+         },
+      ]);
+
+   return embed;
+}
 
 export default {
    category: 'Utilities',
@@ -36,21 +36,33 @@ export default {
    slash: true,
 
    callback: async ({ interaction }) => {
+      var embed;
+      var query;
       try {
-         const query = interaction.options.getString('query');
-         console.log(query);
+         query = interaction.options.getString('query');
+
          const url = `https://caesiumpy.vercel.app/wolframalpha/${
             process.env.WOLFRAMALPHA_KEY
          }?query=${encodeURIComponent(query || '0')}`;
-         console.log(url);
-         const res = await axios.get(url);
-         console.log(res.data);
 
-         const embed = resembed(query, res.data)
-         return embed
-         
+         interaction.deferReply()
+
+         const res = await axios.get(url);
+
+         embed = resembed(String(query), res.data);
+
+         interaction.editReply({
+             embeds: [embed]
+         })
+
       } catch (err) {
+        query = interaction.options.getString('query');
          console.log(err);
+         interaction.deferReply()
+         embed = resembed(String(query), 'Error Occured');
+         interaction.editReply({
+            embeds: [embed]
+        })
       }
    },
 } as ICommand;
