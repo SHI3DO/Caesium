@@ -22,7 +22,7 @@ export default {
    callback: async ({ interaction }) => {
        const query = interaction.options.getString('query')
        console.log(query)
-       const url = `https://caesiumpy.vercel.app/wolframalpha/${process.env.WOLFRAMALPHA_KEY}/${query}`
+       const url = `https://caesiumpy.vercel.app/wolframalpha/${process.env.WOLFRAMALPHA_KEY}?query={query}`
        console.log(url)
        const res = await axios.get(url)
       interaction.reply(`${query}: ${res.data}`);

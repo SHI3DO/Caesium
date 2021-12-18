@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import wolframalpha as wf
 
 
@@ -11,9 +11,9 @@ def home():
     return 'Caesium'
 
 
-@app.route('/wolframalpha/<key>/<query>')
-def wolframalpha(query, key):
-    query = '%s' % query
+@app.route('/wolframalpha/<key>')
+def wolframalpha(key):
+    query = request.args.get('query')
     app_id = key
     client = wf.Client(app_id)
     try:
