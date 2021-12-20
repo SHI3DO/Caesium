@@ -1,20 +1,24 @@
-import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import {
+   MessageActionRow,
+   MessageButton,
+   MessageComponentInteraction,
+   MessageEmbed,
+} from 'discord.js';
 import { ICommand } from 'wokcommands';
-
+import 'dotenv/config';
 import minigamedb from '../../../db/minigamedb';
 
 export default {
    category: 'Minigame',
-   description: '매우 즐거운!',
+   description: '세슘봇의 미니게임들입니다.',
 
    slash: true,
 
-   callback: async ({ interaction }) => {
+   callback: async ({ interaction, channel }) => {
       try {
-         if (await minigamedb.findOne({ UserID: `${interaction.user.id}` })
-         ) {
+         if (await minigamedb.findOne({ UserID: `${interaction.user.id}` })) {
             const embed = new MessageEmbed()
-               .setFooter('Developed by shi3do#2835')
+               .setFooter(`Developed by ${process.env.MAINDEV}`)
                .setColor('#FA747D')
                .setTitle('Error')
                .addFields([
@@ -56,6 +60,45 @@ export default {
             interaction.reply({
                embeds: [embed],
                components: [row],
+            });
+
+            const filter = (btnInt: MessageComponentInteraction) => {
+               return interaction.user.id === btnInt.user.id;
+            };
+
+            const collector = channel.createMessageComponentCollector({
+               filter,
+               max: 1,
+               time: 1000 * 10,
+            });
+
+            collector.on('collect', (i: MessageComponentInteraction) => {
+               if (i.customId === 'yes') {
+                  setTimeout(async () => {
+                     await new minigamedb({
+                        UserID: `${interaction.user.id}`,
+                        Coin: 0,
+                        Created: `${interaction.createdAt}`,
+                        isBanned: false,
+                     }).save();
+                  }, 1000);
+
+                  const yesembed = new MessageEmbed()
+                     .setFooter('Developed by shi3do#2835')
+                     .setColor('#FA747D')
+                     .setTitle('Caesium 미니게임')
+                     .addFields([
+                        {
+                           name: '가입완료',
+                           value: '감사합니다!',
+                        },
+                     ]);
+
+                  i.update({
+                     embeds: [yesembed],
+                     components: [],
+                  });
+               }
             });
          }
       } catch (err) {
