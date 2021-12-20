@@ -1,9 +1,4 @@
-import {
-   MessageActionRow,
-   MessageButton,
-   MessageComponentInteraction,
-   MessageEmbed,
-} from 'discord.js';
+import { MessageEmbed } from 'discord.js';
 import { ICommand } from 'wokcommands';
 
 import minigamedb from '../../../db/minigamedb';
@@ -16,38 +11,58 @@ export default {
 
    slash: true,
    options: [
-       {
-           name: 'value',
-           description: '배팅할 금액',
-           required: true,
-           type: ApplicationCommandOptionTypes.NUMBER
-       }
+      {
+         name: 'value',
+         description: '배팅할 금액',
+         required: true,
+         type: ApplicationCommandOptionTypes.NUMBER,
+      },
    ],
 
    callback: async ({ interaction }) => {
       try {
          if (await minigamedb.findOne({ UserID: `${interaction.user.id}` })) {
-            var coinValue = await minigamedb.findOne({ UserID: `${interaction.user.id}` })
-            if (interaction.options.getNumber('value')! > coinValue.Coin) {
-                const embed = new MessageEmbed()
-                .setFooter(`Developed by ${process.env.MAINDEV}`)
-                .setColor('#FA747D')
-                .setTitle('배팅금액을 다시 확인해주세요.')
-                .addFields([
-                    {
-                        name: `${interaction.options.getNumber('value')} > ${coinValue.Coin}`,
-                        value: '배팅금액은 현재 가진 금액보다 클 수 없어요.',
-                        inline: true
-                    }
-                ])
+            var coinValue = await minigamedb.findOne({
+               UserID: `${interaction.user.id}`,
+            });
+            if (
+               interaction.options.getNumber('value')! > coinValue.Coin ||
+               interaction.options.getNumber('value')! < 0 ||
+               interaction.options.getNumber('value')! % 1 != 0
+            ) {
+               const embed = new MessageEmbed()
+                  .setFooter(`Developed by ${process.env.MAINDEV}`)
+                  .setColor('#FA747D')
+                  .setTitle('배팅금액을 다시 확인해주세요.')
+                  .addFields([
+                     {
+                        name: `${interaction.options.getNumber('value')}`,
+                        value: '배팅금액은 현재 가진 금액보다 크거나 음수이거나 소수가 될 수 없어요.',
+                        inline: true,
+                     },
+                  ]);
 
-                interaction.reply({
-                    embeds: [embed]
-                })
+               interaction.reply({
+                  embeds: [embed],
+               });
             } else {
-                console.log('te')
+               let pp = Math.random() * 100;
+               const casinoembed = new MessageEmbed()
+                  .setFooter(`Developed by ${process.env.MAINDEV}`)
+                  .setColor('#FA747D')
+                  .setTitle('Caesium_Casino')
+                  .addFields([
+                     {
+                        name: `${pp}`,
+                        value: 'ddd',
+                        inline: true,
+                     },
+                  ]);
+
+               interaction.reply({
+                  embeds: [casinoembed],
+               });
             }
-            
          } else {
             const embed = new MessageEmbed()
                .setFooter(`Developed by ${process.env.MAINDEV}`)

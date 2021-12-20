@@ -17,6 +17,10 @@ const schema = new mongoose.Schema({
       type: Boolean,
       required: true,
    },
+   Casino_PP: {
+      type: Number,
+      required: true
+   }
 });
 
 export default mongoose.model('minigamedb', schema, 'minigamedb');
