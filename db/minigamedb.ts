@@ -19,4 +19,4 @@ const schema = new mongoose.Schema({
    },
 });
 
-export default mongoose.model('minigamedb', schema);
+export default mongoose.model('minigamedb', schema, 'minigamedb');
