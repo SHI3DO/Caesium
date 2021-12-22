@@ -46,18 +46,51 @@ export default {
                   embeds: [embed],
                });
             } else {
-               let pp = Math.random() * 100;
-               const casinoembed = new MessageEmbed()
-                  .setFooter(`Developed by ${process.env.MAINDEV}`)
-                  .setColor('#FA747D')
-                  .setTitle('Caesium_Casino')
-                  .addFields([
+               var userInfo = await minigamedb.findOne({
+                  UserID: `${interaction.user.id}`,
+               });
+               var pp = Math.random() * 100;
+               console.log(userInfo.Casino_PP);
+               var casinoembed;
+               if (pp > 100 - userInfo.Casino_PP) {
+                  await minigamedb.updateOne(
+                     { UserID: `${interaction.user.id}` },
+                     { Casino_PP: 49 },
+                  );
+
+                  casinoembed = new MessageEmbed()
+                     .setFooter(`Developed by ${process.env.MAINDEV}`)
+                     .setColor('#FA747D')
+                     .setTitle('Caesium_Casino')
+                     .addFields([
+                        {
+                           name: `${pp}`,
+                           value: '도박성공',
+                           inline: true,
+                        },
+                     ]);
+               } else {
+                  await minigamedb.updateOne(
+                     { UserID: `${interaction.user.id}` },
                      {
-                        name: `${pp}`,
-                        value: 'ddd',
-                        inline: true,
+                        Casino_PP: Math.round(
+                           userInfo.Casino_PP +
+                              (100 - userInfo.Casino_PP) * 0.05,
+                        ),
                      },
-                  ]);
+                  );
+                  casinoembed = new MessageEmbed()
+                     .setFooter(`Developed by ${process.env.MAINDEV}`)
+                     .setColor('#FA747D')
+                     .setTitle('Caesium_Casino')
+                     .addFields([
+                        {
+                           name: `${pp}`,
+                           value: '실패',
+                           inline: true,
+                        },
+                     ]);
+               }
 
                interaction.reply({
                   embeds: [casinoembed],
