@@ -55,7 +55,12 @@ export default {
                if (pp > 100 - userInfo.Casino_PP) {
                   await minigamedb.updateOne(
                      { UserID: `${interaction.user.id}` },
-                     { Casino_PP: 49 },
+                     {
+                        Casino_PP: 49,
+                        Coin:
+                           interaction.options.getNumber('value')! * 3 +
+                           userInfo.Coin,
+                     },
                   );
 
                   casinoembed = new MessageEmbed()
@@ -64,7 +69,10 @@ export default {
                      .setTitle('Caesium_Casino')
                      .addFields([
                         {
-                           name: `${pp}`,
+                           name: `잔액 ${
+                              interaction.options.getNumber('value')! * 3 +
+                              userInfo.Coin
+                           } 확률 ${userInfo.Casino_PP}%`,
                            value: '도박성공',
                            inline: true,
                         },
@@ -77,6 +85,9 @@ export default {
                            userInfo.Casino_PP +
                               (100 - userInfo.Casino_PP) * 0.05,
                         ),
+                        Coin:
+                           userInfo.Coin -
+                           interaction.options.getNumber('value')!,
                      },
                   );
                   casinoembed = new MessageEmbed()
@@ -85,7 +96,10 @@ export default {
                      .setTitle('Caesium_Casino')
                      .addFields([
                         {
-                           name: `${pp}`,
+                           name: `잔액 ${
+                              userInfo.Coin -
+                              interaction.options.getNumber('value')!
+                           } 확률 ${userInfo.Casino_PP}%`,
                            value: '실패',
                            inline: true,
                         },
