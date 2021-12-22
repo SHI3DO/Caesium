@@ -80,7 +80,7 @@ export default {
                         Coin: 0,
                         Created: `${interaction.createdAt}`,
                         isBanned: false,
-                        Casino_PP: 49,
+                        Casino_PP: 29,
                      }).save();
                   }, 1000);
 

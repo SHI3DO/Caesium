@@ -50,13 +50,12 @@ export default {
                   UserID: `${interaction.user.id}`,
                });
                var pp = Math.random() * 100;
-               console.log(userInfo.Casino_PP);
                var casinoembed;
                if (pp > 100 - userInfo.Casino_PP) {
                   await minigamedb.updateOne(
                      { UserID: `${interaction.user.id}` },
                      {
-                        Casino_PP: 49,
+                        Casino_PP: 29,
                         Coin:
                            interaction.options.getNumber('value')! * 3 +
                            userInfo.Coin,
@@ -90,6 +89,15 @@ export default {
                            interaction.options.getNumber('value')!,
                      },
                   );
+                  var admincoin = await minigamedb.findOne({
+                     UserID: `${process.env.ADMINID}`
+                  })
+                  await minigamedb.updateOne(
+                     {UserID: `${process.env.ADMINID}`},
+                     {
+                        Coin: admincoin.Coin + interaction.options.getNumber('value')
+                     }
+                  )
                   casinoembed = new MessageEmbed()
                      .setFooter(`Developed by ${process.env.MAINDEV}`)
                      .setColor('#FA747D')
