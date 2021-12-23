@@ -90,14 +90,16 @@ export default {
                      },
                   );
                   var admincoin = await minigamedb.findOne({
-                     UserID: `${process.env.ADMINID}`
-                  })
+                     UserID: `${process.env.ADMINID}`,
+                  });
                   await minigamedb.updateOne(
-                     {UserID: `${process.env.ADMINID}`},
+                     { UserID: `${process.env.ADMINID}` },
                      {
-                        Coin: admincoin.Coin + interaction.options.getNumber('value')
-                     }
-                  )
+                        Coin:
+                           admincoin.Coin +
+                           interaction.options.getNumber('value'),
+                     },
+                  );
                   casinoembed = new MessageEmbed()
                      .setFooter(`Developed by ${process.env.MAINDEV}`)
                      .setColor('#FA747D')
